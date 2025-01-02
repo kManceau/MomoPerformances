@@ -1,5 +1,22 @@
 @import '../../vendor/twbs/bootstrap/scss/bootstrap';
 
 body{
-  background-color: black
+  background-color: black;
+  margin-block-start: 56px;
+}
+
+#hero{
+  height: calc(100vh - 3.5rem);
+  display: grid;
+  background-size: cover;
+  background-position: center;
+  background-image: image-set(
+    url('../images/hero.avif') type('image/avif'),
+    url('../images/hero.webp') type('image/webp'),
+    url('../images/hero.jpg') type('image/jpg')
+  );
+}
+.hero-text{
+  font-weight: 900;
+  text-shadow: 0 0 10px #000;
 }
