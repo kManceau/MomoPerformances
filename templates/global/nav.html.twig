@@ -11,9 +11,11 @@
                     <li class="nav-item">
                         <a class="nav-link {% if app.request.get('_route') == 'index' %}active{% endif %}" aria-current="page" href="{{ path('index') }}">Accueil</a>
                     </li>
+                    {% if app.user %}
                     <li class="nav-item">
                         <a class="nav-link {% if app.request.get('_route') == 'upload' %}active{% endif %}" href="{{ path('upload') }}">Uploader ma configuration</a>
                     </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link {% if app.request.get('_route') == 'contact' %}active{% endif %}" href="{{ path('contact') }}">Contact</a>
                     </li>
@@ -25,10 +27,10 @@
                         <ul class="dropdown-menu dropdown-menu-dark">
                             {% if app.user %}
                                 <li><a class="dropdown-item" href="#">Gérer mon compte</a></li>
-                                <li><a class="dropdown-item" href="#">Me déconnecter</a></li>
+                                <li><a class="dropdown-item" href="{{ path('logout') }}">Me déconnecter</a></li>
                             {% else %}
-                                <li><a class="dropdown-item" href="#">Se connecter</a></li>
-                                <li><a class="dropdown-item" href="#">S'inscrire</a></li>
+                                <li><a class="dropdown-item" href="{{ path('login') }}">Se connecter</a></li>
+                                <li><a class="dropdown-item" href="{{ path('register') }}">S'inscrire</a></li>
                             {% endif %}
                         </ul>
                     </li>
