@@ -19,6 +19,11 @@
                     <li class="nav-item">
                         <a class="nav-link {% if app.request.get('_route') == 'contact' %}active{% endif %}" href="{{ path('contact') }}">Contact</a>
                     </li>
+                    {% if app.user and 'ROLE_ADMIN' in app.user.getroles() %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.get('_route') == 'contact' %}active{% endif %}" href="{{ path('contact') }}">Administration</a>
+                    </li>
+                    {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
