@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\ConfigUploadFormType;
+use App\Services\ConfigFilesServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,23 +19,34 @@ class MainController extends AbstractController
     }
 
     #[Route('/upload', name: 'upload')]
-    public function upload(Request $request): Response
+    public function upload(Request $request, ConfigFilesServices $configFilesServices): Response
     {
-        $uploadForm = $this->createForm(ConfigUploadFormType::class);
-        $uploadForm->handleRequest($request);
+        $existingConfig = $configFilesServices->getFile($this->getUser()->getId());
+        if($existingConfig !== false) {
+            $hasFile = true;
+            $configFiles = scandir('upload/config/extract/' . $existingConfig);
+            $configFiles = array_slice($configFiles, 2);
+        } else {
+            $uploadForm = $this->createForm(ConfigUploadFormType::class);
+            $uploadForm->handleRequest($request);
+            if ($uploadForm->isSubmitted() && $uploadForm->isValid()) {
+                $this->addFlash('success', 'Upload de la configuration terminé.');
+                $config = $uploadForm->get('config')->getData();
+                $fileName = $this->getUser()->getId() . '_' . $this->getUser()->getUsername() . '_' . date("Y-m-d-H-i-s");
+                $path = 'upload/config/zip/' . $fileName . '.' . $config->guessExtension();
+                $config->move('upload/config/zip/', $fileName . '.' . $config->guessExtension());
+                $configFilesServices->extractArchive($path);
 
-        if($uploadForm->isSubmitted() && $uploadForm->isValid()) {
-            $this->addFlash('success', 'Upload de la configuration terminé.');
-            $config = $uploadForm->get('config')->getData();
-            $config->move('upload/config', $this->getUser()->getId() . '.' . $config->guessExtension());
-            return $this->redirectToRoute('upload');
-        } elseif($uploadForm->isSubmitted() && !$uploadForm->isValid()) {
-            $this->addFlash('error', 'Erreur d\'upload du fichier');
-            return $this->redirectToRoute('upload');
+                return $this->redirectToRoute('upload');
+            } elseif ($uploadForm->isSubmitted() && !$uploadForm->isValid()) {
+                $this->addFlash('error', 'Erreur d\'upload du fichier');
+                return $this->redirectToRoute('upload');
+            }
         }
 
         return $this->render('main/upload.html.twig', [
-            'uploadForm' => $uploadForm->createView(),
+            'uploadForm' => isset($uploadForm) ? $uploadForm->createView() : null,
+            'hasFile' => $hasFile ?? false,
         ]);
     }
 

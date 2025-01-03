@@ -5,7 +5,8 @@
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
-/public/upload/config/*
+/public/upload/config/zip/*
+/public/upload/config/extract/*
 /var/
 /vendor/
 .env.dev
