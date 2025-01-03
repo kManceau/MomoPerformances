@@ -20,6 +20,18 @@
 <body>
 {% include 'global/nav.html.twig' %}
 <main>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-dismissible alert-success container-lg">
+            <buton type="button" class="btn-close" data-bs-dismiss="alert"></buton>
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-dismissible alert-danger container-lg">
+            <buton type="button" class="btn-close" data-bs-dismiss="alert"></buton>
+            {{ message }}
+        </div>
+    {% endfor %}
 {% block body %}{% endblock %}
 </main>
 </body>
