@@ -7,7 +7,6 @@
     <div class="container-lg py-5 text-white">
         {% if hasFile %}
         <h1>Ta configuration :</h1>
-        <p>Tu as uploadé ta configuration le : {{ uploadDate }}</p>
         {% else %}
         <h1>Upload your configuration file here :</h1>
         {{ form_start(uploadForm) }}
