@@ -25,7 +25,7 @@ class ConfigFilesServices
         foreach ($fileList as $file) {
             $fileId = explode('_', $file)[0];
             if ($fileId == $id) {
-                $result = explode('.', $file)[0];
+                $result = $file;
             }
         }
         return $result;

@@ -24,7 +24,7 @@ class MainController extends AbstractController
         $existingConfig = $configFilesServices->getFile($this->getUser()->getId());
         if($existingConfig !== false) {
             $hasFile = true;
-            $configFiles = scandir('upload/config/extract/' . $existingConfig);
+            $configFiles = scandir('upload/config/extract/' . explode('.', $existingConfig)[0]);
             $configFiles = array_slice($configFiles, 2);
         } else {
             $uploadForm = $this->createForm(ConfigUploadFormType::class);
@@ -47,6 +47,9 @@ class MainController extends AbstractController
         return $this->render('main/upload.html.twig', [
             'uploadForm' => isset($uploadForm) ? $uploadForm->createView() : null,
             'hasFile' => $hasFile ?? false,
+            'configFiles' => $configFiles ?? null,
+            'folder' => $existingConfig ? explode('.', $existingConfig)[0] : null,
+            'archiveExtension' => $existingConfig ? explode('.', $existingConfig)[1] : null,
         ]);
     }
 

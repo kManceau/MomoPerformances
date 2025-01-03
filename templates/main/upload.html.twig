@@ -7,7 +7,40 @@
     <div class="container-lg py-5 text-white">
         {% if hasFile %}
         <h1>Ta configuration :</h1>
-        {% else %}
+        <table class="table table-dark my-5">
+            <thead>
+                <tr>
+                    <th>Archive d'origine</th>
+                    <th>Lien</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ folder }}.{{ archiveExtension }}</td>
+                    <td><a href="upload/config/zip/{{ folder }}.{{ archiveExtension }}" class="link-light" target="_blank">Lien</a></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <thead>
+            <tr>
+                <th scope="col">Nom du fichier</th>
+                <th scope="col">Lien</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for file in configFiles %}
+            <tr>
+                <td>{{ file }}</td>
+                <td><a href="upload/config/extract/{{ folder }}/{{ file }}" class="link-light" target="_blank">Lien</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+            {% else %}
         <h1>Upload your configuration file here :</h1>
         {{ form_start(uploadForm) }}
         <div class="form-group my-3">
