@@ -10,10 +10,6 @@
     <link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
     {% block stylesheets %}
     {% endblock %}
-
-    {% block javascripts %}
-        {% block importmap %}{{ importmap('app') }}{% endblock %}
-    {% endblock %}
 </head>
 
 
@@ -34,5 +30,8 @@
     {% endfor %}
 {% block body %}{% endblock %}
 </main>
+{% block javascripts %}
+    {% block importmap %}{{ importmap('app') }}{% endblock %}
+{% endblock %}
 </body>
 </html>
