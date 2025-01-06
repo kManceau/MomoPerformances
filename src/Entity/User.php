@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -36,6 +38,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 100)]
     private ?string $username = null;
+
+    /**
+     * @var Collection<int, Archive>
+     */
+    #[ORM\OneToMany(targetEntity: Archive::class, mappedBy: 'related_to', orphanRemoval: true)]
+    private Collection $archives;
+
+    public function __construct()
+    {
+        $this->archives = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +133,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsername(string $username): static
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Archive>
+     */
+    public function getArchives(): Collection
+    {
+        return $this->archives;
+    }
+
+    public function addArchive(Archive $archive): static
+    {
+        if (!$this->archives->contains($archive)) {
+            $this->archives->add($archive);
+            $archive->setRelatedTo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArchive(Archive $archive): static
+    {
+        if ($this->archives->removeElement($archive)) {
+            // set the owning side to null (unless already changed)
+            if ($archive->getRelatedTo() === $this) {
+                $archive->setRelatedTo(null);
+            }
+        }
 
         return $this;
     }

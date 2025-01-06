@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Archive;
 use App\Form\ConfigUploadFormType;
+use App\Repository\ArchiveRepository;
 use App\Services\ConfigFilesServices;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,12 +22,15 @@ class MainController extends AbstractController
     }
 
     #[Route('/upload', name: 'upload')]
-    public function upload(Request $request, ConfigFilesServices $configFilesServices): Response
+    public function upload(Request $request, ConfigFilesServices $configFilesServices, ArchiveRepository $archiveRepository, EntityManagerInterface $entityManager): Response
     {
-        $existingConfig = $configFilesServices->getFile($this->getUser()->getId());
-        if($existingConfig !== false) {
-            $hasFile = true;
-            $configFiles = scandir('upload/config/extract/' . explode('.', $existingConfig)[0]);
+        $hasArchive = !$this->getUser()->getArchives()->isEmpty();
+        if($hasArchive){
+            $archive = $archiveRepository->findOneBy(['upload_by' => $this->getUser()]);
+            $archiveName = explode('.', $archive->getFilename())[0];
+            $archiveExtension = explode('.', $archive->getFilename())[1];
+            $archiveDate = $archive->getUploadDate();
+            $configFiles = scandir('upload/config/extract/' . $archiveName);
             $configFiles = array_slice($configFiles, 2);
         } else {
             $uploadForm = $this->createForm(ConfigUploadFormType::class);
@@ -33,10 +39,18 @@ class MainController extends AbstractController
                 $this->addFlash('success', 'Upload de la configuration terminé.');
                 $config = $uploadForm->get('config')->getData();
                 $fileName = $this->getUser()->getId() . '_' . $this->getUser()->getUsername() . '_' . date("Y-m-d-H-i-s");
-                $path = 'upload/config/zip/' . $fileName . '.' . $config->guessExtension();
-                $config->move('upload/config/zip/', $fileName . '.' . $config->guessExtension());
+                $extension = $config->guessExtension();
+                $path = 'upload/config/zip/' . $fileName . '.' . $extension;
+                $config->move('upload/config/zip/', $fileName . '.' . $extension);
                 $configFilesServices->extractArchive($path);
-
+                $archive = new Archive();
+                $archive->setFilename($fileName . '.' . $extension);
+                $archive->setUploadDate(date_create(date("Y-m-d H:i:s")));
+                $archive->setUploadBy($this->getUser());
+                $archive->setRelatedTo($this->getUser());
+                $archive->setStatus('pending');
+                $entityManager->persist($archive);
+                $entityManager->flush();
                 return $this->redirectToRoute('upload');
             } elseif ($uploadForm->isSubmitted() && !$uploadForm->isValid()) {
                 $this->addFlash('error', 'Erreur d\'upload du fichier');
@@ -46,10 +60,11 @@ class MainController extends AbstractController
 
         return $this->render('main/upload.html.twig', [
             'uploadForm' => isset($uploadForm) ? $uploadForm->createView() : null,
-            'hasFile' => $hasFile ?? false,
+            'hasArchive' => $hasArchive ?? false,
             'configFiles' => $configFiles ?? null,
-            'folder' => $existingConfig ? explode('.', $existingConfig)[0] : null,
-            'archiveExtension' => $existingConfig ? explode('.', $existingConfig)[1] : null,
+            'folder' => $hasArchive ? $archiveName : null,
+            'archiveExtension' => $hasArchive ? $archiveExtension : null,
+            'archiveDate' => $hasArchive ? $archiveDate : null,
         ]);
     }
 
