@@ -5,10 +5,11 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css"/>
 {% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+{#    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>#}
+{#    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>#}
     <script src="{{ asset('javascript/uploadTable.js') }}"></script>
 {% endblock %}
 
@@ -16,39 +17,9 @@
     <section id="upload">
         <div class="container-lg py-5 text-white">
             {% if hasArchive %}
-                <h1>Ta configuration :</h1>
-                <p class="mt-5">Télécharger ton archive d'origine (uploadée le {{ archiveDate|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}) : </p>
-                <a href="upload/config/zip/{{ folder }}.{{ archiveExtension }}" class="link-light text-decoration-none"
-                   target="_blank">📁 {{ folder }}.{{ archiveExtension }}</a>
-
-                <table id="extractTable" class="mt-3">
-                    <thead>
-                    <tr>
-                        <th scope="col">Nom du fichier</th>
-                        <th scope="col">Lien</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for file in configFiles %}
-                        <tr>
-                            <td>{{ file }}</td>
-                            <td><a href="upload/config/extract/{{ folder }}/{{ file }}"
-                                   class="link-light text-decoration-none" target="_blank">📁 Télécharger</a></td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-
+                {% include 'main/uploadComponent/pending.html.twig' %}
             {% else %}
-                <h1>Upload your configuration file here :</h1>
-                {{ form_start(uploadForm) }}
-                <div class="form-group my-3">
-                    {{ form_row(uploadForm.config) }}
-                </div>
-                <div class="form-group my-3">
-                    {{ form_row(uploadForm.submit) }}
-                </div>
-                {{ form_end(uploadForm) }}
+                {% include 'main/uploadComponent/uploadForm.html.twig' %}
             {% endif %}
         </div>
     </section>

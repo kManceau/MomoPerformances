@@ -17,7 +17,7 @@
 {% include 'global/nav.html.twig' %}
 <main>
     {% for message in app.flashes('success') %}
-        <div class="alert alert-dismissible alert-success container-lg">
+        <div class="alert alert-dismissible alert-success container-lg notification-alert">
             <buton type="button" class="btn-close" data-bs-dismiss="alert"></buton>
             {{ message }}
         </div>
@@ -30,6 +30,7 @@
     {% endfor %}
 {% block body %}{% endblock %}
 </main>
+
 {% block javascripts %}
     {% block importmap %}{{ importmap('app') }}{% endblock %}
 {% endblock %}

@@ -21,7 +21,17 @@ body{
   text-shadow: 0 0 10px #000;
 }
 
-.alert{
+.notification-alert{
   margin-block-start: 5.5rem !important;
   margin-block-end: 0 !important;
+}
+
+.accordion-header-button{
+  background-color: black !important;
+  color: white !important;
+}
+
+.accordion-body{
+  background-color: black;
+  color: white;
 }

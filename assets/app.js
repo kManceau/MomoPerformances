@@ -6,3 +6,5 @@ import './bootstrap.js';
  * which should already be in your base.html.twig.
  */
 import './javascript/bootstrap.bundle.min.js'
+import './javascript/jquery-3.7.1.min.js'
+import './javascript/dataTables.js'
