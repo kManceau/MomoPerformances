@@ -6,7 +6,7 @@ use App\Entity\Archive;
 use App\Form\ConfigUploadFormType;
 use App\Repository\ArchiveRepository;
 use App\Repository\PageRepository;
-use App\Services\ArchiveService;
+use App\Service\ArchiveService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

@@ -6,12 +6,22 @@
 <section id="edit-account">
     <div class="container-lg py-5 text-white">
         <h1>Modifie les informations du compte</h1>
+        {% if user.hasAvatar %}
+        <picture>
+            <source srcset="/upload/avatar/{{ user.id }}.avif" type="image/avif">
+            <source srcset="/upload/avatar/{{ user.id }}.webp" type="image/webp">
+            <img src="/upload/avatar/{{ user.id }}.jpg" alt="Avatar de {{ user.username }}" class="my-3 avatar"/>
+        </picture>
+        {% endif %}
         {{ form_start(userForm) }}
         <div class="form-group my-3">
             {{ form_row(userForm.username) }}
         </div>
         <div class="form-group my-3">
             {{ form_row(userForm.email) }}
+        </div>
+        <div class="form-group my-3">
+            {{ form_row(userForm.avatar) }}
         </div>
         <div class="form-group my-3">
             {{ form_row(userForm.submit) }}

@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ArchiveRepository;
-use App\Services\ArchiveService;
+use App\Service\ArchiveService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
