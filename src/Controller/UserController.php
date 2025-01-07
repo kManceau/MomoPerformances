@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\UserFormType;
 use App\Repository\UserRepository;
+use App\Service\ArchiveService;
 use App\Service\ImageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class UserController extends AbstractController
 {
     #[Route('/user/edit/{id}', name: 'edit_user')]
-    public function index($id, UserRepository $userRepository, Request $request, ImageService $imageService, EntityManagerInterface $entityManager): Response
+    public function edit($id, UserRepository $userRepository, Request $request, ImageService $imageService, EntityManagerInterface $entityManager): Response
     {
         if($id == $this->getUser()->getId() || $this->getUser()->getId() == 1){
             $user = $userRepository->find($id);
@@ -42,5 +43,33 @@ class UserController extends AbstractController
             $this->addFlash('error', 'Vous n\'avez pas le droit de faire ça !');
             return $this->redirectToRoute('index');
         }
+    }
+
+    #[Route('/user/delete/{id}', name: 'delete_user')]
+    public function delete($id, UserRepository $userRepository, ImageService $imageService, ArchiveService $archiveService, EntityManagerInterface $entityManager): Response
+    {
+        if ($id == $this->getUser()->getId() || $this->getUser()->getId() == 1) {
+            $user = $userRepository->find($id);
+            $imageService->deleteImages($user->getId(), 'avatar');
+            if(!$this->getUser()->getArchives()->isEmpty()){
+                foreach ($user->getArchives() as $archive){
+                    $filename = $archive->getFilename();
+                    $folder = explode('.', $filename)[0];
+                    unlink('upload/config/zip/'.$filename);
+                    $archiveService->deleteFolder('upload/config/extract/'.$folder);
+                }
+            }
+            $entityManager->remove($user);
+            $entityManager->flush();
+            $this->addFlash('succces', 'Utilisateur supprimé.');
+            if($this->getUser()->getId() == 1){
+                return $this->redirectToRoute('admin_index');
+            } else {
+                $this->container->get('security.token_storage')->setToken(null);
+                return $this->redirectToRoute('index');
+            }
+        }
+        $this->addFlash('error', 'Tu n\'as pas le droit de faire ça !');
+        return $this->redirectToRoute('index');
     }
 }
