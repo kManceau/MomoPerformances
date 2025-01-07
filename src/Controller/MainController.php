@@ -74,10 +74,10 @@ class MainController extends AbstractController
         ]);
     }
 
-    #[Route('/contact', name: 'contact')]
-    public function contact(): Response
+    #[Route('/messages', name: 'messages')]
+    public function messages(): Response
     {
-        return $this->render('main/contact.html.twig', [
+        return $this->render('main/messages.html.twig', [
         ]);
     }
 

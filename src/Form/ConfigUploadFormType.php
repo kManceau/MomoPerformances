@@ -15,7 +15,7 @@ class ConfigUploadFormType extends AbstractType
     {
         $builder
             ->add('config', FileType::class, [
-                'label' => 'Fichier de configuration (format Zip ou RAR)',
+                'label' => 'Fichier de configuration (format Zip ou RAR, max 500 Mo)',
                 'mapped' => false,
                 'required' => true,
                 'attr' => [

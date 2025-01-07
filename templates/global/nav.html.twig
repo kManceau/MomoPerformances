@@ -9,32 +9,39 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link {% if app.request.get('_route') == 'index' %}active{% endif %}" aria-current="page" href="{{ path('index') }}">Accueil</a>
+                        <a class="nav-link {% if app.request.get('_route') == 'index' %}active{% endif %}"
+                           aria-current="page" href="{{ path('index') }}">Accueil</a>
                     </li>
                     {% if app.user %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if app.request.get('_route') == 'upload' %}active{% endif %}" href="{{ path('upload') }}">Uploader ma configuration</a>
-                    </li>
+                        {% if 'ROLE_ADMIN' not in app.user.getroles() %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if app.request.get('_route') == 'upload' %}active{% endif %}"
+                               href="{{ path('upload') }}">Uploader ma configuration</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if app.request.get('_route') == 'messages' %}active{% endif %}"
+                               href="{{ path('messages') }}">Messages (0)</a>
+                        </li>
                     {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if app.request.get('_route') == 'contact' %}active{% endif %}" href="{{ path('contact') }}">Contact</a>
-                    </li>
                     {% if app.user and 'ROLE_ADMIN' in app.user.getroles() %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if app.request.get('_route') == 'admin_index' %}active{% endif %}" href="{{ path('admin_index') }}">Administration</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if app.request.get('_route') == 'admin_index' %}active{% endif %}"
+                               href="{{ path('admin_index') }}">Administration</a>
+                        </li>
                     {% endif %}
                     <li class="nav-item dropdown">
 
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
                             {{ app.user ? app.user.username : 'Compte' }}
                         </a>
 
 
-
                         <ul class="dropdown-menu dropdown-menu-dark">
                             {% if app.user %}
-                                <li><a class="dropdown-item" href="{{ path('edit_user', {id : app.user.id}) }}">Gérer mon compte</a></li>
+                                <li><a class="dropdown-item" href="{{ path('edit_user', {id : app.user.id}) }}">Gérer
+                                        mon compte</a></li>
                                 <li><a class="dropdown-item" href="{{ path('logout') }}">Me déconnecter</a></li>
                             {% else %}
                                 <li><a class="dropdown-item" href="{{ path('login') }}">Se connecter</a></li>
