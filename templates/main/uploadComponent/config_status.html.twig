@@ -1,0 +1,7 @@
+<div class="alert alert-{{ status == 'Terminée' ? 'succes' : 'dark' }} container-lg mt-5">
+    <p>Statut de la demande : {{ status }}</p>
+    <p>Télécharge ton archive d'origine (uploadée le {{ archive.uploadDate|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}) : </p>
+    <a href="upload/config/zip/{{ folder }}.{{ archiveExtension }}" class="link-dark text-decoration-none"
+       target="_blank">📁 {{ folder }}.{{ archiveExtension }}</a><br>
+    <a href="/archive/delete/{{ archive.id }}" class="btn btn-danger mt-3">Supprimer ta configuration ?</a>
+</div>

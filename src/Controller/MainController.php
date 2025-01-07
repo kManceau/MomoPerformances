@@ -78,10 +78,4 @@ class MainController extends AbstractController
         ]);
     }
 
-    #[Route('/acount_edit', name: 'acount_edit')]
-    public function acount_edit(): Response
-    {
-        return $this->render('main/acount_edit.html.twig', [
-        ]);
-    }
 }
