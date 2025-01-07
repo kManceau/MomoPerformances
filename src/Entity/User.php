@@ -45,6 +45,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Archive::class, mappedBy: 'related_to', orphanRemoval: true)]
     private Collection $archives;
 
+    #[ORM\Column]
+    private ?bool $hasAvatar = null;
+
     public function __construct()
     {
         $this->archives = new ArrayCollection();
@@ -163,6 +166,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $archive->setRelatedTo(null);
             }
         }
+
+        return $this;
+    }
+
+    public function hasAvatar(): ?bool
+    {
+        return $this->hasAvatar;
+    }
+
+    public function setHasAvatar(bool $hasAvatar): static
+    {
+        $this->hasAvatar = $hasAvatar;
 
         return $this;
     }

@@ -7,6 +7,7 @@
 /public/bundles/
 /public/upload/config/zip/*
 /public/upload/config/extract/*
+/public/upload/avatar/*
 /var/
 /vendor/
 .env.dev

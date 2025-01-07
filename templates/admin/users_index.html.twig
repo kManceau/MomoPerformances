@@ -14,7 +14,7 @@
                 <div class="row">
                     {% for user in users %}
                     <div class="col mb-5 mb-md-0">
-                        <div class="admin-item">
+                        <div class="admin-item" {% if user.hasAvatar %}style="background-image: url('/upload/avatar/{{ user.id }}.jpg');"{% endif %}>
                             <a href="{{ path('edit_user', {id : user.id}) }}">Editer {{ user.username }}</a>
                         </div>
                     </div>
