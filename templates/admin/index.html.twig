@@ -1,0 +1,38 @@
+{% extends 'global/base.html.twig' %}
+
+{% block title %}Mon Compte{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/admin.scss') }}">
+{% endblock %}
+
+{% block body %}
+    <section id="admin-index">
+        <div class="container-lg py-5 text-white">
+            <h1>Bienvenue dans l'administration</h1>
+
+            <div class="d-grid gap-5 justify-content-center mt-5 container-lg">
+                <div class="row">
+                    <div class="col mb-5 mb-md-0">
+                        <div class="admin-item">
+                            <a href="#">Editer la page d'accueil</a>
+                        </div>
+                    </div>
+
+                    <div class="col mb-5 mb-md-0">
+                        <div class="admin-item">
+                            <a href="#">Gérer les utilisateurs</a>
+                        </div>
+                    </div>
+
+                    <div class="col mb-5 mb-md-0">
+                        <div class="admin-item">
+                            <a href="#">Gérer les configurations</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

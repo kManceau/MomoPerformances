@@ -21,11 +21,17 @@
                     </li>
                     {% if app.user and 'ROLE_ADMIN' in app.user.getroles() %}
                     <li class="nav-item">
-                        <a class="nav-link {% if app.request.get('_route') == 'contact' %}active{% endif %}" href="{{ path('contact') }}">Administration</a>
+                        <a class="nav-link {% if app.request.get('_route') == 'admin_index' %}active{% endif %}" href="{{ path('admin_index') }}">Administration</a>
                     </li>
                     {% endif %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ app.user.username }}</a>
+
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ app.user ? app.user.username : 'Compte' }}
+                        </a>
+
+
+
                         <ul class="dropdown-menu dropdown-menu-dark">
                             {% if app.user %}
                                 <li><a class="dropdown-item" href="{{ path('edit_user', {id : app.user.id}) }}">Gérer mon compte</a></li>

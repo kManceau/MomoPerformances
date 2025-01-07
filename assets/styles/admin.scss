@@ -1,0 +1,18 @@
+.admin-item{
+  width: 12.5rem;
+  height: 12.5rem;
+  padding: 2rem;
+  background-color: #9a9a9a;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 50%;
+  a{
+    color: black;
+    text-decoration: none;
+  }
+  a:hover{
+    text-decoration: underline;
+  }
+}
