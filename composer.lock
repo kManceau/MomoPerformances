@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "208a654c833a6c4c511b8de320b13ac9",
+    "content-hash": "b232abe9f77af0dc3e1cc29973cb2a5e",
     "packages": [
         {
             "name": "composer/semver",
@@ -1376,6 +1376,59 @@
                 }
             ],
             "time": "2024-12-27T00:36:43+00:00"
+        },
+        {
+            "name": "emileperron/tinymce-bundle",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EmilePerron/tinymce-bundle.git",
+                "reference": "237dc24f4f78fd2dd1d7e06457bfb2b26c78b23d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EmilePerron/tinymce-bundle/zipball/237dc24f4f78fd2dd1d7e06457bfb2b26c78b23d",
+                "reference": "237dc24f4f78fd2dd1d7e06457bfb2b26c78b23d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1",
+                "symfony/asset": "^4.0|^5.0|^6.0|^7.0",
+                "symfony/dependency-injection": "^4.0|^5.0|^6.0|^7.0",
+                "symfony/form": "^4.0|^5.0|^6.0|^7.0",
+                "symfony/http-foundation": "^4.0|^5.0|^6.0|^7.0",
+                "symfony/http-kernel": "^4.0|^5.0|^6.0|^7.0",
+                "symfony/routing": "^4.0|^5.0|^6.0|^7.0",
+                "twig/twig": "^3.3"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.55",
+                "phpmd/phpmd": "^2.15",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-symfony": "^1.3",
+                "phpunit/phpunit": "^9.16|^10.5|^11.1",
+                "vincentlanglet/twig-cs-fixer": "^2.8"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "EmilePerron\\TinymceBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Émile Perron",
+                    "email": "contact@emileperron.com"
+                }
+            ],
+            "description": "A Symfony bundle to add TinyMCE in your apps and forms.",
+            "support": {
+                "issues": "https://github.com/EmilePerron/tinymce-bundle/issues",
+                "source": "https://github.com/EmilePerron/tinymce-bundle/tree/v3.0.0"
+            },
+            "time": "2024-11-20T01:58:58+00:00"
         },
         {
             "name": "monolog/monolog",

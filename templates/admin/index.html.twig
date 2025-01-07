@@ -1,6 +1,6 @@
 {% extends 'global/base.html.twig' %}
 
-{% block title %}Mon Compte{% endblock %}
+{% block title %}Administration{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('styles/admin.scss') }}">
@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col mb-5 mb-md-0">
                         <div class="admin-item">
-                            <a href="#">Editer la page d'accueil</a>
+                            <a href="{{ path('admin_edit_home') }}">Editer la page d'accueil</a>
                         </div>
                     </div>
 

@@ -1,0 +1,28 @@
+{% extends 'global/base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/admin.scss') }}">
+{% endblock %}
+
+{% block body %}
+    <section id="admin-index">
+        <div class="container-lg py-5 text-white">
+            <h1>Modification de la page d'accueil</h1>
+            {{ form_start(editForm) }}
+            <div class="form-group mt-5">
+            {{ form_widget(editForm.content,
+                {'attr':
+                    {'content_css': asset('styles/app.scss') }
+                })
+            }}
+            </div>
+            <div class="form-group mt-3">
+            {{ form_widget(editForm.submit) }}
+            </div>
+            {{ form_end(editForm) }}
+        </div>
+    </section>
+
+{% endblock %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Archive;
 use App\Form\ConfigUploadFormType;
 use App\Repository\ArchiveRepository;
+use App\Repository\PageRepository;
 use App\Services\ArchiveService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,9 +16,11 @@ use Symfony\Component\Routing\Attribute\Route;
 class MainController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(): Response
+    public function index(PageRepository $pageRepository): Response
     {
+        $content = $pageRepository->findOneBy(['title' => 'index'])->getContent();
         return $this->render('main/index.html.twig', [
+            'content' => $content,
         ]);
     }
 
