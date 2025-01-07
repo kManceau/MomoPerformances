@@ -14,10 +14,8 @@ class EditHomePageFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-//            ->add('content')
             ->add('content', TinymceType::class,[
                 'attr' => ['class' => 'my-2',
-//                    'max-width' => '89rem',
                     'height' => '100vh',
                     'toolbar' => 'undo redo | bold italic underline fontsizeinput forecolor | bullist numlist | link',
                 ]

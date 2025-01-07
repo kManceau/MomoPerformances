@@ -9,27 +9,16 @@
 {% block body %}
     <section id="admin-index">
         <div class="container-lg py-5 text-white">
-            <h1>Bienvenue dans l'administration</h1>
-
+            <h1>Modification des utilisateurs</h1>
             <div class="d-grid gap-5 justify-content-center mt-5 container-lg">
                 <div class="row">
+                    {% for user in users %}
                     <div class="col mb-5 mb-md-0">
                         <div class="admin-item">
-                            <a href="{{ path('admin_edit_home') }}">Editer la page d'accueil</a>
+                            <a href="{{ path('edit_user', {id : user.id}) }}">Editer {{ user.username }}</a>
                         </div>
                     </div>
-
-                    <div class="col mb-5 mb-md-0">
-                        <div class="admin-item">
-                            <a href="{{ path('admin_users_index') }}">Gérer les utilisateurs</a>
-                        </div>
-                    </div>
-
-                    <div class="col mb-5 mb-md-0">
-                        <div class="admin-item">
-                            <a href="#">Gérer les configurations</a>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

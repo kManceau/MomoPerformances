@@ -15,7 +15,7 @@ class UserController extends AbstractController
     #[Route('/user/edit/{id}', name: 'edit_user')]
     public function index($id, UserRepository $userRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
-        if($id == $this->getUser()->getId() || $id == 1){
+        if($id == $this->getUser()->getId() || $this->getUser()->getId() == 1){
             $user = $userRepository->find($id);
             $userForm = $this->createForm(UserFormType::class, $user);
             $userForm->handleRequest($request);
